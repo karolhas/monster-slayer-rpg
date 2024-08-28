@@ -1,6 +1,8 @@
 //hooks
 import Image from "next/image";
-import Link from "next/link";
+
+//components
+import Button from "@/components/ui/Button";
 
 //images
 import MainMenuBg from "@/public/assets/background/MainMenuBg.webp";
@@ -19,18 +21,30 @@ export default function MainMenuPage() {
           Monster Slayer RPG
         </h1>
         <div className="flex flex-col space-y-4">
-          <Link
+          <Button
             href="/create-character"
-            className="bg-blue-500 hover:bg-blue-600 tansition duration-200 text-white font-bold py-2 px-4 rounded flex justify-center items-center"
+            variant={"primary"}
+            size={"default"}
+            weight={"bold"}
           >
-            <button>Play</button>
-          </Link>
-          <button className="bg-blue-500 hover:bg-blue-600 tansition duration-200 text-white font-bold py-2 px-4 rounded">
-            Options
-          </button>
-          <button className="bg-blue-500 hover:bg-blue-600 tansition duration-200 text-white font-bold py-2 px-4 rounded">
+            Play
+          </Button>
+          <Button
+            href="/settings"
+            variant={"primary"}
+            size={"default"}
+            weight={"bold"}
+          >
+            Settings
+          </Button>
+          <Button
+            href="/credits"
+            variant={"primary"}
+            size={"default"}
+            weight={"bold"}
+          >
             Credits
-          </button>
+          </Button>
         </div>
       </div>
     </div>
