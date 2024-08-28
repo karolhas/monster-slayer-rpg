@@ -2,8 +2,11 @@
 
 //hooks
 import { useState } from "react";
-import Link from "next/link";
 import Image from "next/image";
+
+//components
+import Modal from "../../components/ui/Modal";
+import Button from "@/components/ui/Button";
 
 //images
 import WarriorAvatar from "@/public/assets/avatars/warrior.webp";
@@ -25,6 +28,7 @@ const SelectClassPage = () => {
     LUC: 0,
   });
   const [totalPoints, setTotalPoints] = useState(6);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleClassSelect = (characterClass: CharacterClass) => {
     setSelectedClass(characterClass);
@@ -61,9 +65,20 @@ const SelectClassPage = () => {
     }
   };
 
+  const statsDescription = {
+    STR: "Increase physical damage and attack-power.",
+    REC: "Increase physical defense and HP.",
+    INT: "Increase magic attack-power.",
+    WIS: "Increase magic defence, success rate of magic attack and MP.",
+    DEX: "Increase ranged attack, rate of evasion, successful hit rate.",
+    LUC: "Increase critical hit chance, critical damage, critical evation rate.",
+  };
+
   return (
     <div className="flex flex-col items-center justify-center h-screen">
-      <h2 className="text-3xl font-bold mb-8">Select Your Class</h2>
+      <h2 className="text-3xl font-bold mb-8 text-gray-700">
+        Select Your Class
+      </h2>
       <div className="flex justify-center mb-8 gap-2 mx-2">
         <div
           className={`p-2 border rounded-lg cursor-pointer hover:bg-blue-300 duration-200 ${
@@ -104,7 +119,7 @@ const SelectClassPage = () => {
       {selectedClass && (
         <div className="w-[320px]">
           <h3 className="text-2xl font-bold mb-4 text-center">
-            {selectedClass} Statistics
+            {selectedClass} statistics
           </h3>
           <div className="grid grid-cols-2 gap-4 border p-4 bg-slate-50 rounded-lg bg-opacity-80">
             <div className="flex items-center gap-1">
@@ -152,7 +167,7 @@ const SelectClassPage = () => {
               </button>
             </div>
             <div className="flex items-center gap-1">
-              <label className="block text-gray-700 font-bold mr-1">INT:</label>
+              <label className="block text-gray-700 font-bold">INT:</label>
               <input
                 type="text"
                 value={stats.INT}
@@ -240,29 +255,48 @@ const SelectClassPage = () => {
               </button>
             </div>
           </div>
+          <div className="flex">
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="mt-4 bg-blue-300 hover:bg-blue-400 px-2 py-1 rounded-lg mx-auto text-sm transition "
+            >
+              Learn about stats
+            </button>
+          </div>
+
+          <Modal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            title="Stats description"
+          >
+            <ul className="list-disc pl-5">
+              {Object.entries(statsDescription).map(([stat, description]) => (
+                <li key={stat} className="mb-2">
+                  <strong>{stat}</strong>: {description}
+                </li>
+              ))}
+            </ul>
+          </Modal>
           <div className="mt-4 text-center font-bold">
             Remaining points: {totalPoints}
           </div>
         </div>
       )}
       <div className="flex space-x-4 mt-8">
-        <Link href="/create-character">
-          <button className="bg-blue-500 hover:bg-blue-600 tansition duration-200 text-white font-bold py-2 px-4 rounded">
-            Back
-          </button>
-        </Link>
-        <Link href="/game-menu">
-          <button
-            disabled={selectedClass === null || totalPoints > 0}
-            className={`${
-              selectedClass !== null && totalPoints === 0
-                ? "bg-blue-500 hover:bg-blue-600 tansition duration-200 text-white"
-                : "bg-gray-300 cursor-not-allowed"
-            } font-bold py-2 px-4 rounded`}
-          >
-            Start
-          </button>
-        </Link>
+        <Button
+          href="/create-character"
+          variant={"primary"}
+          size={"default"}
+          weight={"bold"}
+        >
+          Back
+        </Button>
+        <Button
+          href="/game-menu"
+          disabled={selectedClass === null || totalPoints > 0}
+        >
+          Start
+        </Button>
       </div>
     </div>
   );
