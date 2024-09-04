@@ -34,7 +34,7 @@ const GameMenuPage = () => {
       </div>
       <div className="bg-white bg-opacity-70 p-8 rounded-lg shadow-lg w-80 mt-16">
         <div className="flex flex-col gap-4 justify-center items-center">
-          <Link href="/explore">
+          <Link href="/explore-dungeon">
             <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded transition duration-200">
               Explore
             </button>
